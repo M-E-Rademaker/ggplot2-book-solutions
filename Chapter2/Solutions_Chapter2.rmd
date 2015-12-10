@@ -66,13 +66,13 @@ __Question 4__: Which manufacturer has the most models in this dataset? Which mo
     specification of drive train (e.g. "pathfinder 4wd", "a4 quattro") from the 
     model name?  
 __Answer to the first part__: 
-1.  Most models in total by manufacturer:
+If we just want the total number of models by manufacturer we use `tally`
 ```{r}
 q4_1 <- mpg %>% 
   group_by(manufacturer) %>% 
   tally(sort = TRUE)
 ```
-1.1 If we are looking for most *unique* models by manufacturer 
+If we are looking for most *unique* models by manufacturer 
 ```{r}
 q4_2 <- mpg %>% 
   group_by(manufacturer) %>% 
@@ -89,14 +89,99 @@ All combined in a plot
 df <- data.frame(rbind(q4_1, q4_2), "Type" = as.factor(rep(c("overall", "unique"), each = 15)))
 
 ggplot(df, aes(x = reorder(as.factor(manufacturer), n), y = n, fill = Type)) + 
-  geom_bar(width = 0.2, stat = "identity", position = "dodge") + 
-  coord_flip() + 
+  geom_bar(width = 0.5, stat = "identity", position = "dodge") + 
   ggtitle("Number of models per manufacturer") +
-  ylab("Count") + xlab("Model")
+  labs(y = "Count", x = "Model") +
+  coord_flip() 
 ```
 
-__Answer to the second part__
+__Answer to the second part__: Which model has the most variation
 
-table(mpg$model)
+```{r}
+unique(mpg$model)
+```
+The `a4` and the `camry` both have a second model (the `a4 quattro` and the `camry solar`)
+Hence, only the `camry` has true model variation. To remove the redundant information
+we use functions from the `stringr` package.
 
-#### Answers
+```{r eval=FALSE}
+require(stringr, quietly = TRUE)
+
+str_trim(str_replace_all(unique(mpg$model), c("quattro" = "", "4wd" = "", 
+                                     "2wd" = "", "awd" = "")))
+
+```
+
+### Exercises 2.3.1 (page 16)
+
+```{r}
+rm(list = ls()) # clean 
+
+ggplot(mpg, aes(cty, hwy)) +
+  geom_point()
+```
+
+
+__Question 1__: How would you describe the relationship between `cty` and `hwy`?
+    Do you have any concerns about drawing conclusions from that plot?  
+__Answer__: There is a clear linear relationship which is not surprising as both
+variables measure fuel economy. Hence, the there is not much inside to be gained
+except that cars which are fuel efficient on a highway are also fuel efficient in
+cities. This relationship is probably a function of speed.
+
+__Question 2__: What does `ggplot(mpg, aes(model, manufacturer)) + geom_point()` show?
+    Is it useful? How could you modify the data to make it more informative?  
+
+```{r}
+ggplot(mpg, aes(model, manufacturer)) + 
+  geom_point()
+```
+
+__Answer__: The plot is not useful for a number of reasons
+
+ + Each dot represents a different manufacturer-model combination that we observe
+ in the data. There is no inherent hiearchy so this is just a nominal scale.
+ + As there is no interpretable relationship between the points, there is no inside to be gained
+from comparing positions (which is the very reason for a scatterplot).
+ + Some of the data is hidden as some manufacturer-model combinations appear
+ more than once in the data (e.g. `audi a4`).
+ + Even if overplotting wouldn't concern us, it is very likely that each unique
+ model only pairs with one manufacturer such that a two dimensional plot is 
+ redundant.
+
+A possible alternative would be to look total number of observations for each
+manufacturer-model combination using `geom_bar()`.
+
+```{r}
+
+df <- mpg %>% 
+  transmute("man_mod" = paste(manufacturer, model, sep = " "))
+
+
+ggplot(df, aes(man_mod)) +
+  geom_bar() + 
+  coord_flip()
+```
+
+  
+__Question 3__: Describe the data, aesthetic mappings and layers used for each of the 
+    following plots. You'll need to guess a little because you haven't seen
+    all the datasets and functions yet, but use your common sense! See if you 
+    can predict what the plot will look like before running the code.
+    
+    1. `ggplot(mpg, aes(cty, hwy)) + geom_point()`
+    1. `ggplot(diamonds, aes(carat, price)) + geom_point()`
+    1. `ggplot(economics, aes(date, unemploy)) + geom_line()`
+    1. `ggplot(mpg, aes(cty)) + geom_histogram()`
+    
+__Answer__: You can always access infos using 
+        `summary(<plot>)` as in e.g.
+        
+```{r}
+summary(ggplot(economics, aes(date, unemploy)) + geom_line())
+```
+
+1.  **Data**: For the data see `?<dataset>`  
+1.  **Aesthetic mappings**: All mappings in this example are position mappings.  
+1.  **Layers**: There is one layer for each plot.
+
