@@ -17,24 +17,24 @@ mpg
 ### Exercises 2.2.1 (Page 14 f.)
 
 __Question 1__: List five functions that you could use to get more information
-    about the `mpg` dataset.  
+    about the `mpg` data set.  
 __Answer__: Some useful functions are
 
  + `summary`: print some summary statistics for each variable  
- + `View`: to see the whole dataset in a nice spread-sheet like fashion
+ + `View`: to see the whole data set in a nice spread-sheet like fashion
  + `str` : get info on the structure of the `mpg` object
- + `dplyr::glimps`: similar to `str` but much tidyer
+ + `dplyr::glimps`: similar to `str` but much tidier
  + `class`: to get its class
  
 ```{r}
 glimpse(mpg)
 ```
 
-__Question 2__: How can you find out what other datasets are included with ggplot2?  
+__Question 2__: How can you find out what other data sets are included with ggplot2?  
 __Answer__: You can find a list of all data set included in ggplot2 at <http://docs.ggplot2.org/current/index.html>.
     
 __Question 3__: Apart from the US, most countries use fuel consumption (fuel consumed
-    over fixed distance) rather than fuel economy (distance travelled with
+    over fixed distance) rather than fuel economy (distance traveled with
     fixed amount of fuel). How could you convert `cty` and `hwy` into the
     European standard of l/100km?  
 __Answer__:  
@@ -61,7 +61,7 @@ mpg %>%
             "hwy_l100km" = mpgTol100km(hwy))
 ```
 
-__Question 4__: Which manufacturer has the most models in this dataset? Which model has 
+__Question 4__: Which manufacturer has the most models in this data set? Which model has 
     the most variations? Does your answer change if you remove the redundant
     specification of drive train (e.g. "pathfinder 4wd", "a4 quattro") from the 
     model name?  
@@ -140,7 +140,7 @@ ggplot(mpg, aes(model, manufacturer)) +
 __Answer__: The plot is not useful for a number of reasons
 
  + Each dot represents a different manufacturer-model combination that we observe
- in the data. There is no inherent hiearchy so this is just a nominal scale.
+ in the data. There is no inherent hierarchy so this is just a nominal scale.
  + As there is no interpretable relationship between the points, there is no inside to be gained
 from comparing positions (which is the very reason for a scatterplot).
  + Some of the data is hidden as some manufacturer-model combinations appear
@@ -166,7 +166,7 @@ ggplot(df, aes(man_mod)) +
   
 __Question 3__: Describe the data, aesthetic mappings and layers used for each of the 
     following plots. You'll need to guess a little because you haven't seen
-    all the datasets and functions yet, but use your common sense! See if you 
+    all the data sets and functions yet, but use your common sense! See if you 
     can predict what the plot will look like before running the code.
     
     1. `ggplot(mpg, aes(cty, hwy)) + geom_point()`
@@ -174,7 +174,7 @@ __Question 3__: Describe the data, aesthetic mappings and layers used for each o
     1. `ggplot(economics, aes(date, unemploy)) + geom_line()`
     1. `ggplot(mpg, aes(cty)) + geom_histogram()`
     
-__Answer__: You can always access infos using 
+__Answer__: You can always access info using 
         `summary(<plot>)` as in e.g.
         
 ```{r}
@@ -184,4 +184,54 @@ summary(ggplot(economics, aes(date, unemploy)) + geom_line())
 1.  **Data**: For the data see `?<dataset>`  
 1.  **Aesthetic mappings**: All mappings in this example are position mappings.  
 1.  **Layers**: There is one layer for each plot.
+
+### Exercises 2.4.1 (page 18)
+
+__Question 1__:  Experiment with the color, shape and size aesthetics. What happens when 
+    you map them to continuous values? What about categorical values? What 
+    happens when you use more than one aesthetic in a plot?
+    
+__Answer__:
+
+```{r eval = FALSE}
+# Categorial
+ggplot(mpg, aes(cty, displ, colour = class)) + 
+  geom_point()
+
+# Continuous 
+ggplot(mpg, aes(cty, hwy, size = displ)) + 
+  geom_jitter()
+
+## Doesnt work for shape
+ggplot(mpg, aes(cty, hwy, shape = displ)) + 
+  geom_jitter()
+
+```
+
+All aesthetics that have a natural continuous scale can be used for both continuous
+and discrete variables.
+
+__Question 2__: What happens if you map a continuous variable to shape? Why? What happens
+    if you map `trans` to shape? Why?
+    
+__Answer__: As mentioned before: all aesthetics that have a natural continuous scale
+can be used for both continuous and discrete variables. Shape doesn't have 
+a continuous scale so it throws an error. When a discrete variable has more than
+6 different values its hard to discriminate hence we get a warning.
+
+```{r}
+ggplot(mpg, aes(cty, hwy, shape = trans)) + 
+  geom_point()
+```
+
+    
+__Question 3__: How is drive train related to fuel economy? How is drive train related to
+    engine size and class?
+
+__Answer__:
+
+```{r}
+ggplot(mpg, aes(drv, cty)) + 
+  geom_boxplot()
+```
 
