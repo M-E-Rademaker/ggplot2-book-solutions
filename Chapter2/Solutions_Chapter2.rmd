@@ -1,0 +1,102 @@
+---
+title: "Exercises"
+output: 
+  html_document: 
+    toc: yes
+---
+
+## Chapter 2 - Getting started with ggplot2
+
+```{r}
+require(ggplot2, quietly = TRUE)
+require(dplyr, quietly = TRUE, warn.conflicts = FALSE)
+options(digits = 4, dplyr.print_min = 6, dplyr.print_max = 6)
+mpg
+```
+
+### Exercises 2.2.1 (Page 14 f.)
+
+__Question 1__: List five functions that you could use to get more information
+    about the `mpg` dataset.  
+__Answer__: Some useful functions are
+
+ + `summary`: print some summary statistics for each variable  
+ + `View`: to see the whole dataset in a nice spread-sheet like fashion
+ + `str` : get info on the structure of the `mpg` object
+ + `dplyr::glimps`: similar to `str` but much tidyer
+ + `class`: to get its class
+ 
+```{r}
+glimpse(mpg)
+```
+
+__Question 2__: How can you find out what other datasets are included with ggplot2?  
+__Answer__: You can find a list of all data set included in ggplot2 at <http://docs.ggplot2.org/current/index.html>.
+    
+__Question 3__: Apart from the US, most countries use fuel consumption (fuel consumed
+    over fixed distance) rather than fuel economy (distance travelled with
+    fixed amount of fuel). How could you convert `cty` and `hwy` into the
+    European standard of l/100km?  
+__Answer__:  
+
+```{r}
+mpgTol100km <- function(milespergallon){
+  GalloLiter <- 3.785411784
+  MileKilometer <- 1.609344 
+  
+  l100km <- (100*GalloLiter)/(milespergallon*MileKilometer)
+  l100km
+}
+```
+We could use `apply` to convert the columns
+```{r}
+apply(mpg[, c("cty", "hwy")], 2, mpgTol100km) %>% 
+  head()
+```
+
+Another possibility is to use the `dplyr` functions `transmute` or `mutate` 
+```{r}
+mpg %>% 
+  transmute("cty_l100km" = mpgTol100km(cty),
+            "hwy_l100km" = mpgTol100km(hwy))
+```
+
+__Question 4__: Which manufacturer has the most models in this dataset? Which model has 
+    the most variations? Does your answer change if you remove the redundant
+    specification of drive train (e.g. "pathfinder 4wd", "a4 quattro") from the 
+    model name?  
+__Answer to the first part__: 
+1.  Most models in total by manufacturer:
+```{r}
+q4_1 <- mpg %>% 
+  group_by(manufacturer) %>% 
+  tally(sort = TRUE)
+```
+1.1 If we are looking for most *unique* models by manufacturer 
+```{r}
+q4_2 <- mpg %>% 
+  group_by(manufacturer) %>% 
+  transmute("n" = length(unique(model))) %>% 
+  unique() %>%
+  ungroup() %>% 
+  arrange(desc(n))
+```
+
+All combined in a plot
+
+```{r}
+
+df <- data.frame(rbind(q4_1, q4_2), "Type" = as.factor(rep(c("overall", "unique"), each = 15)))
+
+ggplot(df, aes(x = reorder(as.factor(manufacturer), n), y = n, fill = Type)) + 
+  geom_bar(width = 0.2, stat = "identity", position = "dodge") + 
+  coord_flip() + 
+  ggtitle("Number of models per manufacturer") +
+  ylab("Count") + xlab("Model")
+```
+
+__Answer to the second part__
+
+table(mpg$model)
+
+#### Answers
