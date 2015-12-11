@@ -268,11 +268,9 @@ To compare drive train (`drv`), engine size (`displ`) and `class` i suggest a
 scatterplot with some horizontal jittering to avoid overplotting
 (no vertical jittering, as this would incorrectly change the original values of `displ`)
 
-```{r}
-ggplot(mpg, aes(factor(class), displ, colour = drv)) + 
+```{r fig.width=7}
+ggplot(mpg, aes(reorder(class, displ, FUN = median), displ, colour = drv)) + 
   geom_jitter(width = 0.5, height = 0) + 
-  scale_x_discrete(limits = c("compact", "subcompact", "midsize", "minivan",
-                              "suv", "pickup", "2seater"))
 ```
 
 ### Exercises 2.5.1 (page 19)
@@ -324,4 +322,61 @@ facet. As noted in the help file, this is reasonable if we want to compare
 across facets. If our focus is on individual patterns within each facet, setting
 `scales = "free"` might be more approriate.
 
-### Exercise 2.5.1
+### Exercise 2.6.6
+
+__Question 1__: What's the problem with the plot created by 
+    `ggplot(mpg, aes(cty, hwy)) + geom_point()`? Which of the geoms 
+    described above is most effective at remedying the problem?
+
+__Answer__: The problem is overplotting. Two possible strategies:
+
+1. Use jittering via `geom_jitter`
+
+```{r}
+ggplot(mpg, aes(cty, hwy)) + 
+  geom_jitter()
+```
+
+1. Set the opacity with the option `alpha`
+
+```{r}
+ggplot(mpg, aes(cty, hwy)) + 
+  geom_point(alpha = 0.3)
+```
+
+__Question 2__: One challenge with `ggplot(mpg, aes(class, hwy)) + geom_boxplot()`
+    is that the ordering of `class` is alphabetical, which is not terribly 
+    useful. How could you change the factor levels to be more informative? 
+   
+    Rather than reordering the factor by hand, you can do it automatically
+    based on the data:
+    `ggplot(mpg, aes(reorder(class, hwy), hwy)) + geom_boxplot()`.
+    What does `reorder()` do? Read the documentation.
+
+__Answer__: `reorder` takes a variable and orders its levels (or unique values)
+based on the values of the second variable. If the second variable is numeric
+`reorder` by default orders by mean, this can to e.g. the median. 
+
+```{r}
+ggplot(mpg, aes(reorder(class, hwy, FUN = median), hwy)) + 
+  geom_boxplot()
+```
+
+__Question 3__: Explore the distribution of the carat variable in the `diamonds`
+    dataset. What binwidth reveals the most interesting patterns?
+    
+__Question 4__: Explore the distribution of the price variable in the `diamonds`
+    data. How does the distribution vary by cut?
+
+__Question 5__: You now know (at least) three ways to compare the distributions of 
+    subgroups: `geom_violin()`, `geom_freqpoly()` and the colour aesthetic,
+    or `geom_histogram()` and facetting. What are the strengths and weaknesses 
+    of each approach? What other approaches could you try?
+
+__Question 6__: Read the documentation for `geom_bar()`. What does the `weight` 
+    aesthetic do? 
+
+__Question 7__: Using the techniques already discussed in this chapter, come up with
+    three ways to visualise a 2d categorical distribution. Try them out 
+    by visualising the distribution of `model` and `manufacturer`, `trans` and 
+    `class`, and `cyl` and `trans`.
