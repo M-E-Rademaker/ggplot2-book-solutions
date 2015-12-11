@@ -1,9 +1,20 @@
 ---
 title: "Exercises"
-output: 
-  html_document: 
+output:
+  html_document:
     toc: yes
+    toc_depth: 4
+  pdf_document:
+    toc: yes
+    toc_depth: 4
 ---
+
+```{r knitr-setup, include=FALSE}
+library(knitr)
+opts_chunk$set(fig.align="center", fig.height=4, fig.width=4) # for html
+# opts_chunk$set(fig.width=7, fig.height=4) # for pdf
+opts_knit$set(progress = FALSE, verbose = TRUE)
+```
 
 ## Chapter 2 - Getting started with ggplot2
 
@@ -14,7 +25,7 @@ options(digits = 4, dplyr.print_min = 6, dplyr.print_max = 6)
 mpg
 ```
 
-### Exercises 2.2.1 (Page 14 f.)
+### Exercises 2.2.1 (page 14)
 
 __Question 1__: List five functions that you could use to get more information
     about the `mpg` data set.  
@@ -84,12 +95,15 @@ q4_2 <- mpg %>%
 
 All combined in a plot
 
-```{r}
+```{r fig.height=5, fig.width=7}
 
 df <- data.frame(rbind(q4_1, q4_2), "Type" = as.factor(rep(c("overall", "unique"), each = 15)))
 
 ggplot(df, aes(x = reorder(as.factor(manufacturer), n), y = n, fill = Type)) + 
   geom_bar(width = 0.5, stat = "identity", position = "dodge") + 
+  theme(panel.grid.major.y = element_blank(), 
+        panel.grid.minor.y = element_blank()) +
+  scale_y_continuous(breaks = seq(0,40, by = 5)) + 
   ggtitle("Number of models per manufacturer") +
   labs(y = "Count", x = "Model") +
   coord_flip() 
@@ -114,7 +128,7 @@ str_trim(str_replace_all(unique(mpg$model), c("quattro" = "", "4wd" = "",
 
 ### Exercises 2.3.1 (page 16)
 
-```{r}
+```{r }
 rm(list = ls()) # clean 
 
 ggplot(mpg, aes(cty, hwy)) +
@@ -152,7 +166,7 @@ from comparing positions (which is the very reason for a scatterplot).
 A possible alternative would be to look total number of observations for each
 manufacturer-model combination using `geom_bar()`.
 
-```{r}
+```{r fig.height=7, fig.width=5}
 
 df <- mpg %>% 
   transmute("man_mod" = paste(manufacturer, model, sep = " "))
@@ -219,7 +233,7 @@ can be used for both continuous and discrete variables. Shape doesn't have
 a continuous scale so it throws an error. When a discrete variable has more than
 6 different values its hard to discriminate hence we get a warning.
 
-```{r}
+```{r }
 ggplot(mpg, aes(cty, hwy, shape = trans)) + 
   geom_point()
 ```
@@ -232,6 +246,82 @@ __Answer__:
 
 ```{r}
 ggplot(mpg, aes(drv, cty)) + 
-  geom_boxplot()
+  geom_boxplot() +
+  scale_x_discrete(limits = c("f", "r", "4"),
+                   labels = c("Front wheel", "Rear wheel", "Four wheel"))
 ```
 
+The boxplot is a good way of showing the relationship between a continous and a
+(factor) variable with just a few levels. To compare densities we could also use
+a violin plot 
+
+```{r}
+ggplot(mpg, aes(drv, cty)) + 
+  geom_violin() +
+  scale_x_discrete(limits = c("f", "r", "4"),
+                   labels = c("Front wheel", "Rear wheel", "Four wheel"))
+```
+Front wheel cars are most efficient in terms of fuel economy (the picture is
+almost identical for higway mpg). 
+
+To compare drive train (`drv`), engine size (`displ`) and `class` i suggest a 
+scatterplot with some horizontal jittering to avoid overplotting
+(no vertical jittering, as this would incorrectly change the original values of `displ`)
+
+```{r}
+ggplot(mpg, aes(factor(class), displ, colour = drv)) + 
+  geom_jitter(width = 0.5, height = 0) + 
+  scale_x_discrete(limits = c("compact", "subcompact", "midsize", "minivan",
+                              "suv", "pickup", "2seater"))
+```
+
+### Exercises 2.5.1 (page 19)
+
+__Question 1__: What happens if you try to facet by a continuous variable like 
+    `hwy`? What about `cyl`?  What's the key difference?
+
+__Answer__: Facetting by a continous variable works but becomes hard to read and
+interpret when the variable that we facet by has to many levels. 
+The following plot is therefore rather hard to read and therefore meaningless.
+
+```{r}
+ggplot(mpg, aes(displ, cty)) + 
+  geom_point() +
+  facet_wrap(~ hwy)
+```
+
+This is much easier to grasp
+```{r}
+ggplot(mpg, aes(displ, cty)) + 
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(~ cyl)
+```
+
+__Question 2__: Use facetting to explore the 3-way relationship between fuel economy,
+    engine size, and number of cylinders. How does facetting by number of
+    cylinders change your assessement of the relationship between
+    engine size and fuel economy?
+    
+__Answer__: As can be seen from the above plot: the relationship differs by cylinder number.
+While there is no reasonable relationship between `cyt` and `disp` for 5 cylinder
+cars, it is negative for 4 cylinder cars, less pronounced but still negative for
+6 cylinder cars and postive for 8 cylinder cars.
+
+__Question 3__: Read the documentation for `facet_wrap()`. What arguments can you use
+    to control how many rows and columns appear in the output?
+    
+__Answer__: `?facet_wrap`: the arguments are `nrow` and `ncol`.
+    
+__Question 4__: What does the `scales` argument to `facet_wrap()` do? When might you use 
+    it?
+    
+__Answer__: By default `facet_wrap` uses the same scales for each facet. Scales 
+define how the data is mapped to aestetics. To take an example: assume that
+the values `f` of the variable `drv` is mapped to the colour *red* by scales. 
+The default behaviour of `facet_wrap` is to use *red* for `f` in every possible
+facet. As noted in the help file, this is reasonable if we want to compare 
+across facets. If our focus is on individual patterns within each facet, setting
+`scales = "free"` might be more approriate.
+
+### Exercise 2.5.1
