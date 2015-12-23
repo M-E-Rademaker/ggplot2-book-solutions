@@ -1,18 +1,18 @@
 ---
 title: "Exercises"
 output:
-  html_document:
+  pdf_document:
     toc: yes
     toc_depth: 4
-  pdf_document:
+  html_document:
     toc: yes
     toc_depth: 4
 ---
 
 ```{r knitr-setup, include=FALSE}
 library(knitr)
-opts_chunk$set(fig.align="center", fig.height=4, fig.width=8) # for html
-# opts_chunk$set(fig.width=7, fig.height=4) # for pdf
+# opts_chunk$set(fig.align="center", fig.height=4, fig.width=8) # for html
+opts_chunk$set(fig.width=8, fig.height=4) # for pdf
 opts_knit$set(progress = FALSE, verbose = TRUE)
 ```
 
@@ -390,7 +390,9 @@ ggplot(diamonds, aes(x = price)) +
   geom_histogram(bins = bins) +
   facet_wrap(~cut, scales = "free")
 ```
+
 Or alternatively using a frequency polygon
+
 ```{r}
 ggplot(diamonds, aes(x = price, y =..density.., color = cut)) +
   geom_freqpoly(binwidth = 200)
