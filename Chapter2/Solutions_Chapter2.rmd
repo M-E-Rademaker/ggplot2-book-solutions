@@ -2,7 +2,7 @@
 title: "Exercises"
 output: 
   md_document:
-    variant: markdown_github
+
   pdf_document:
     toc: yes
     toc_depth: 4
