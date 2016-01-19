@@ -2,6 +2,7 @@
 title: "Exercises"
 output: 
   md_document:
+  variant: markdown_github+backtick_code_blocks
 
   pdf_document:
     toc: yes
