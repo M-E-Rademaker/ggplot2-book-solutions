@@ -1,15 +1,10 @@
 ---
 title: "Exercises"
-output: 
-  md_document:
-  variant: markdown_github
-  
-  pdf_document:
-    toc: yes
-    toc_depth: 4
+output:
   html_document:
     toc: yes
     toc_depth: 4
+    keep_md: true
 ---
 
 ```{r knitr-setup, include=FALSE}
