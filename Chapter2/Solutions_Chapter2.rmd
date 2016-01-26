@@ -1,15 +1,26 @@
 ---
 title: "Exercises"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
-  html_document:
+  md_document:
+    variant: markdown_github
     toc: yes
     toc_depth: 4
-    keep_md: true
 ---
 
+
+<!-- --- -->
+<!-- title: "Exercises" -->
+<!-- date: "`r format(Sys.time(), '%d %B, %Y')`" -->
+<!-- output: -->
+<!--   html_document: -->
+<!--     toc: yes -->
+<!--     toc_depth: 4 -->
+<!-- --- -->
+   
 ```{r knitr-setup, include=FALSE}
 library(knitr)
-opts_chunk$set(fig.align="center", fig.height=4, fig.width=8) # for html
+opts_chunk$set(fig.align="center", fig.height = 4, fig.width = 8) # for html
 # opts_chunk$set(fig.width=8, fig.height=4) # for pdf
 opts_knit$set(progress = FALSE, verbose = TRUE)
 ```
@@ -17,7 +28,7 @@ opts_knit$set(progress = FALSE, verbose = TRUE)
 ## Chapter 2 - Getting started with ggplot2
 
 ```{r}
-require(ggplot2, quietly = TRUE)
+require(ggplot2, quietly = TRUE, warn.conflicts = FALSE)
 require(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 options(digits = 4, dplyr.print_min = 6, dplyr.print_max = 6)
 mpg
