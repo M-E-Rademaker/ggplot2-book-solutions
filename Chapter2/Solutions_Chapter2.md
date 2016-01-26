@@ -124,7 +124,8 @@ mpg %>%
     ## 6       13.07      9.047
     ## ..        ...        ...
 
-**Question 4**: Which manufacturer has the most models in this data set? Which model has the most variations? Does your answer change if you remove the redundant specification of drive train (e.g. "pathfinder 4wd", "a4 quattro") from the model name?
+> **Question 4**: Which manufacturer has the most models in this data set? Which model has the most variations? Does your answer change if you remove the redundant specification of drive train (e.g. "pathfinder 4wd", "a4 quattro") from the model name?
+
 **Answer to the first part**: If we just want the total number of models by manufacturer we use `tally`
 
 ``` r
@@ -207,10 +208,11 @@ ggplot(mpg, aes(cty, hwy)) +
 
 <img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-11-1.png" title="" alt="" style="display: block; margin: auto;" />
 
-**Question 1**: How would you describe the relationship between `cty` and `hwy`? Do you have any concerns about drawing conclusions from that plot?
+> **Question 1**: How would you describe the relationship between `cty` and `hwy`? Do you have any concerns about drawing conclusions from that plot?
+
 **Answer**: There is a clear linear relationship which is not surprising as both variables measure fuel economy. Hence, the there is not much inside to be gained except that cars which are fuel efficient on a highway are also fuel efficient in cities. This relationship is probably a function of speed.
 
-**Question 2**: What does `ggplot(mpg, aes(model, manufacturer)) + geom_point()` show? Is it useful? How could you modify the data to make it more informative?
+> **Question 2**: What does `ggplot(mpg, aes(model, manufacturer)) + geom_point()` show? Is it useful? How could you modify the data to make it more informative?
 
 ``` r
 ggplot(mpg, aes(model, manufacturer)) + 
@@ -240,7 +242,7 @@ ggplot(df, aes(man_mod)) +
 
 <img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-13-1.png" title="" alt="" style="display: block; margin: auto;" />
 
-**Question 3**: Describe the data, aesthetic mappings and layers used for each of the following plots. You'll need to guess a little because you haven't seen all the data sets and functions yet, but use your common sense! See if you can predict what the plot will look like before running the code.
+> **Question 3**: Describe the data, aesthetic mappings and layers used for each of the following plots. You'll need to guess a little because you haven't seen all the data sets and functions yet, but use your common sense! See if you can predict what the plot will look like before running the code.
 
     1. `ggplot(mpg, aes(cty, hwy)) + geom_point()`
     1. `ggplot(diamonds, aes(carat, price)) + geom_point()`
@@ -267,7 +269,7 @@ summary(ggplot(economics, aes(date, unemploy)) + geom_line())
 
 ### Exercises 2.4.1 (page 18)
 
-**Question 1**: Experiment with the color, shape and size aesthetics. What happens when you map them to continuous values? What about categorical values? What happens when you use more than one aesthetic in a plot?
+> **Question 1**: Experiment with the color, shape and size aesthetics. What happens when you map them to continuous values? What about categorical values? What happens when you use more than one aesthetic in a plot?
 
 **Answer**:
 
@@ -287,7 +289,7 @@ ggplot(mpg, aes(cty, hwy, shape = displ)) +
 
 All aesthetics that have a natural continuous scale can be used for both continuous and discrete variables.
 
-**Question 2**: What happens if you map a continuous variable to shape? Why? What happens if you map `trans` to shape? Why?
+> **Question 2**: What happens if you map a continuous variable to shape? Why? What happens if you map `trans` to shape? Why?
 
 **Answer**: As mentioned before: all aesthetics that have a natural continuous scale can be used for both continuous and discrete variables. Shape doesn't have a continuous scale so it throws an error. When a discrete variable has more than 6 different values its hard to discriminate hence we get a warning.
 
@@ -308,7 +310,7 @@ ggplot(mpg, aes(cty, hwy, shape = trans)) +
 
 <img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-16-1.png" title="" alt="" style="display: block; margin: auto;" />
 
-**Question 3**: How is drive train related to fuel economy? How is drive train related to engine size and class?
+> **Question 3**: How is drive train related to fuel economy? How is drive train related to engine size and class?
 
 **Answer**:
 
@@ -343,7 +345,7 @@ ggplot(mpg, aes(reorder(class, displ, FUN = median), displ, colour = drv)) +
 
 ### Exercises 2.5.1 (page 19)
 
-**Question 1**: What happens if you try to facet by a continuous variable like `hwy`? What about `cyl`? What's the key difference?
+> **Question 1**: What happens if you try to facet by a continuous variable like `hwy`? What about `cyl`? What's the key difference?
 
 **Answer**: Facetting by a continous variable works but becomes hard to read and interpret when the variable that we facet by has to many levels. The following plot is therefore rather hard to read and therefore meaningless.
 
@@ -366,21 +368,21 @@ ggplot(mpg, aes(displ, cty)) +
 
 <img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-21-1.png" title="" alt="" style="display: block; margin: auto;" />
 
-**Question 2**: Use facetting to explore the 3-way relationship between fuel economy, engine size, and number of cylinders. How does facetting by number of cylinders change your assessement of the relationship between engine size and fuel economy?
+> **Question 2**: Use facetting to explore the 3-way relationship between fuel economy, engine size, and number of cylinders. How does facetting by number of cylinders change your assessement of the relationship between engine size and fuel economy?
 
 **Answer**: As can be seen from the above plot: the relationship differs by cylinder number. While there is no reasonable relationship between `cyt` and `disp` for 5 cylinder cars, it is negative for 4 cylinder cars, less pronounced but still negative for 6 cylinder cars and postive for 8 cylinder cars.
 
-**Question 3**: Read the documentation for `facet_wrap()`. What arguments can you use to control how many rows and columns appear in the output?
+> **Question 3**: Read the documentation for `facet_wrap()`. What arguments can you use to control how many rows and columns appear in the output?
 
 **Answer**: `?facet_wrap`: the arguments are `nrow` and `ncol`.
 
-**Question 4**: What does the `scales` argument to `facet_wrap()` do? When might you use it?
+> **Question 4**: What does the `scales` argument to `facet_wrap()` do? When might you use it?
 
 **Answer**: By default `facet_wrap` uses the same scales for each facet. Scales define how the data is mapped to aestetics. To take an example: assume that the values `f` of the variable `drv` is mapped to the colour *red* by scales. The default behaviour of `facet_wrap` is to use *red* for `f` in every possible facet. As noted in the help file, this is reasonable if we want to compare across facets. If our focus is on individual patterns within each facet, setting `scales = "free"` might be more approriate.
 
 ### Exercises 2.6.6 (page 29)
 
-**Question 1**: What's the problem with the plot created by `ggplot(mpg, aes(cty, hwy)) + geom_point()`? Which of the geoms described above is most effective at remedying the problem?
+> **Question 1**: What's the problem with the plot created by `ggplot(mpg, aes(cty, hwy)) + geom_point()`? Which of the geoms described above is most effective at remedying the problem?
 
 **Answer**: The problem is overplotting. Two possible strategies:
 
@@ -402,7 +404,7 @@ ggplot(mpg, aes(cty, hwy)) +
 
 <img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-23-1.png" title="" alt="" style="display: block; margin: auto;" />
 
-**Question 2**: One challenge with `ggplot(mpg, aes(class, hwy)) + geom_boxplot()` is that the ordering of `class` is alphabetical, which is not terribly useful. How could you change the factor levels to be more informative? Rather than reordering the factor by hand, you can do it automatically based on the data: `ggplot(mpg, aes(reorder(class, hwy), hwy)) + geom_boxplot()`. What does `reorder()` do? Read the documentation.
+> **Question 2**: One challenge with `ggplot(mpg, aes(class, hwy)) + geom_boxplot()` is that the ordering of `class` is alphabetical, which is not terribly useful. How could you change the factor levels to be more informative? Rather than reordering the factor by hand, you can do it automatically based on the data: `ggplot(mpg, aes(reorder(class, hwy), hwy)) + geom_boxplot()`. What does `reorder()` do? Read the documentation.
 
 **Answer**: `reorder` takes a variable and orders its levels (or unique values) based on the values of the second variable. If the second variable is numeric `reorder` by default orders by mean, this can be changed to e.g. the median.
 
@@ -413,7 +415,7 @@ ggplot(mpg, aes(reorder(class, hwy, FUN = median), hwy)) +
 
 <img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-24-1.png" title="" alt="" style="display: block; margin: auto;" />
 
-**Question 3**: Explore the distribution of the carat variable in the `diamonds` dataset. What binwidth reveals the most interesting patterns?
+> **Question 3**: Explore the distribution of the carat variable in the `diamonds` dataset. What binwidth reveals the most interesting patterns?
 
 **Answer**:
 
@@ -449,7 +451,7 @@ ggplot(diamonds, aes(x = carat)) +
 
 With a the number of bins set to 200 Beginning at 0.3 carat there is a spike in the number of diamonds at 0.3, 0.5, 0.7, 0,9, 1, 1.2 and 1.5. I am no diamonds expert but there is probably a reason for this pattern.
 
-**Question 4**: Explore the distribution of the price variable in the `diamonds` data. How does the distribution vary by cut?
+> **Question 4**: Explore the distribution of the price variable in the `diamonds` data. How does the distribution vary by cut?
 
 **Answer**:
 
@@ -473,12 +475,12 @@ ggplot(diamonds, aes(x = price, y =..density.., color = cut)) +
 
 Fair quality diamonds are more expensive then others. Possible reason: they are bigger.
 
-**Question 5**: You now know (at least) three ways to compare the distributions of subgroups: `geom_violin()`, `geom_freqpoly()` and the colour aesthetic, or `geom_histogram()` and facetting. What are the strengths and weaknesses of each approach? What other approaches could you try?
+> **Question 5**: You now know (at least) three ways to compare the distributions of subgroups: `geom_violin()`, `geom_freqpoly()` and the colour aesthetic, or `geom_histogram()` and facetting. What are the strengths and weaknesses of each approach? What other approaches could you try?
 
 **Answer**: to be done
 
-**Question 6**: Read the documentation for `geom_bar()`. What does the `weight` aesthetic do?
+> **Question 6**: Read the documentation for `geom_bar()`. What does the `weight` aesthetic do?
 
     ?geom_bar
 
-**Question 7**: Using the techniques already discussed in this chapter, come up with three ways to visualise a 2d categorical distribution. Try them out by visualising the distribution of `model` and `manufacturer`, `trans` and `class`, and `cyl` and `trans`.
+> **Question 7**: Using the techniques already discussed in this chapter, come up with three ways to visualise a 2d categorical distribution. Try them out by visualising the distribution of `model` and `manufacturer`, `trans` and `class`, and `cyl` and `trans`.
