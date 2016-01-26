@@ -43,7 +43,8 @@ mpg
 
 ### Exercises 2.2.1 (page 14)
 
-**Question 1**: List five functions that you could use to get more information about the `mpg` data set.
+> **Question 1**: List five functions that you could use to get more information about the `mpg` data set.
+
 **Answer**: Some useful functions are
 
 -   `summary`: print some summary statistics for each variable
@@ -70,10 +71,12 @@ glimpse(mpg)
     ## $ fl           (chr) "p", "p", "p", "p", "p", "p", "p", "p", "p", "p",...
     ## $ class        (chr) "compact", "compact", "compact", "compact", "comp...
 
-**Question 2**: How can you find out what other data sets are included with ggplot2?
+> **Question 2**: How can you find out what other data sets are included with ggplot2?
+
 **Answer**: You can find a list of all data set included in ggplot2 at <http://docs.ggplot2.org/current/index.html>.
 
-**Question 3**: Apart from the US, most countries use fuel consumption (fuel consumed over fixed distance) rather than fuel economy (distance traveled with fixed amount of fuel). How could you convert `cty` and `hwy` into the European standard of l/100km?
+> **Question 3**: Apart from the US, most countries use fuel consumption (fuel consumed over fixed distance) rather than fuel economy (distance traveled with fixed amount of fuel). How could you convert `cty` and `hwy` into the European standard of l/100km?
+
 **Answer**:
 
 ``` r
