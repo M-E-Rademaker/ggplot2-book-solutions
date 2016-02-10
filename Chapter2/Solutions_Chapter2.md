@@ -7,7 +7,7 @@
 
 <!-- --- -->
 <!-- title: "Exercises" -->
-<!-- date: "26 Januar, 2016" -->
+<!-- date: "10 Februar, 2016" -->
 <!-- output: -->
 <!--   html_document: -->
 <!--     toc: yes -->
@@ -18,11 +18,6 @@ Chapter 2 - Getting started with ggplot2
 
 ``` r
 require(ggplot2, quietly = TRUE, warn.conflicts = FALSE)
-```
-
-    ## Warning: package 'ggplot2' was built under R version 3.2.3
-
-``` r
 require(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 options(digits = 4, dplyr.print_min = 6, dplyr.print_max = 6)
 mpg
