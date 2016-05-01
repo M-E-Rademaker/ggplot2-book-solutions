@@ -2,21 +2,11 @@
 title: "Exercises"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
-  md_document:
-    variant: markdown_github
+  github_document:
     toc: yes
     toc_depth: 4
 ---
 
-<!-- --- -->
-<!-- title: "Exercises" -->
-<!-- date: "`r format(Sys.time(), '%d %B, %Y')`" -->
-<!-- output: -->
-<!--   html_document: -->
-<!--     toc: yes -->
-<!--     toc_depth: 4 -->
-<!-- --- -->
-   
 ```{r knitr-setup, include=FALSE}
 library(knitr)
 

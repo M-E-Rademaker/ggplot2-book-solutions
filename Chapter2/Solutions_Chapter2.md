@@ -1,3 +1,7 @@
+Exercises
+================
+01 Mai, 2016
+
 -   [Chapter 2 - Getting started with ggplot2](#chapter-2---getting-started-with-ggplot2)
     -   [Exercises 2.2.1 (page 14)](#exercises-2.2.1-page-14)
     -   [Exercises 2.3.1 (page 16)](#exercises-2.3.1-page-16)
@@ -5,14 +9,6 @@
     -   [Exercises 2.5.1 (page 19)](#exercises-2.5.1-page-19)
     -   [Exercises 2.6.6 (page 29)](#exercises-2.6.6-page-29)
 
-<!-- --- -->
-<!-- title: "Exercises" -->
-<!-- date: "10 Februar, 2016" -->
-<!-- output: -->
-<!--   html_document: -->
-<!--     toc: yes -->
-<!--     toc_depth: 4 -->
-<!-- --- -->
 Chapter 2 - Getting started with ggplot2
 ----------------------------------------
 
@@ -439,8 +435,6 @@ ggplot(diamonds, aes(x = carat)) +
 ```
 
     ## Warning: Removed 1889 rows containing non-finite values (stat_bin).
-
-    ## Warning: Removed 2 rows containing missing values (geom_bar).
 
 <img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-25-1.png" title="" alt="" style="display: block; margin: auto;" />
 
