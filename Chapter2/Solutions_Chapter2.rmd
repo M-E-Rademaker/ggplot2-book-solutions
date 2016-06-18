@@ -10,8 +10,7 @@ output:
 ```{r knitr-setup, include=FALSE}
 library(knitr)
 
-opts_chunk$set(fig.align = "center", fig.height = 4, fig.width = 8,
-               dev = "svg") # for html
+opts_chunk$set(fig.align = "center", fig.height = 4, fig.width = 8) # for html
 # opts_chunk$set(fig.width=8, fig.height=4) # for pdf
 opts_knit$set(progress = FALSE, verbose = TRUE)
 ```

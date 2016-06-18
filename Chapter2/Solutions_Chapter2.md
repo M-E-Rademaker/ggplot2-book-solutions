@@ -163,7 +163,7 @@ ggplot(df, aes(x = reorder(as.factor(manufacturer), n), y = n, fill = Type)) +
   coord_flip() 
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-9-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
 **Answer to the second part**: Which model has the most variation
 
@@ -209,7 +209,7 @@ ggplot(mpg, aes(cty, hwy)) +
   geom_point()
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-12-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 > **Question 1**: How would you describe the relationship between `cty` and `hwy`? Do you have any concerns about drawing conclusions from that plot?
 
@@ -222,7 +222,7 @@ ggplot(mpg, aes(model, manufacturer)) +
   geom_point()
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-13-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
 **Answer**: The plot is not useful for a number of reasons
 
@@ -243,7 +243,7 @@ ggplot(df, aes(man_mod)) +
   coord_flip()
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-14-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
 
 > **Question 3**: Describe the data, aesthetic mappings and layers used for each of the following plots. You'll need to guess a little because you haven't seen all the data sets and functions yet, but use your common sense! See if you can predict what the plot will look like before running the code.
 
@@ -311,7 +311,7 @@ ggplot(mpg, aes(cty, hwy, shape = trans)) +
     ## because more than 6 becomes difficult to discriminate; you have
     ## 10. Consider specifying shapes manually if you must have them.
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-17-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
 
 > **Question 3**: How is drive train related to fuel economy? How is drive train related to engine size and class?
 
@@ -324,7 +324,7 @@ ggplot(mpg, aes(drv, cty)) +
                    labels = c("Front wheel", "Rear wheel", "Four wheel"))
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-18-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
 
 The boxplot is a good way of showing the relationship between a continous and a (factor) variable with just a few levels. To compare densities we could also use a violin plot
 
@@ -335,7 +335,7 @@ ggplot(mpg, aes(drv, cty)) +
                    labels = c("Front wheel", "Rear wheel", "Four wheel"))
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-19-1.svg" style="display: block; margin: auto;" /> Front wheel cars are most efficient in terms of fuel economy (the picture is almost identical for higway mpg).
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /> Front wheel cars are most efficient in terms of fuel economy (the picture is almost identical for higway mpg).
 
 To compare drive train (`drv`), engine size (`displ`) and `class` i suggest a scatterplot with some horizontal jittering to avoid overplotting (no vertical jittering, as this would incorrectly change the original values of `displ`)
 
@@ -344,7 +344,7 @@ ggplot(mpg, aes(reorder(class, displ, FUN = median), displ, colour = drv)) +
   geom_jitter(width = 0.5, height = 0)
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-20-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
 
 ### Exercises 2.5.1 (page 19)
 
@@ -358,7 +358,7 @@ ggplot(mpg, aes(displ, cty)) +
   facet_wrap(~ hwy)
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-21-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-21-1.png" style="display: block; margin: auto;" />
 
 This is much easier to grasp
 
@@ -369,7 +369,7 @@ ggplot(mpg, aes(displ, cty)) +
   facet_wrap(~ cyl)
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-22-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-22-1.png" style="display: block; margin: auto;" />
 
 > **Question 2**: Use facetting to explore the 3-way relationship between fuel economy, engine size, and number of cylinders. How does facetting by number of cylinders change your assessement of the relationship between engine size and fuel economy?
 
@@ -396,7 +396,7 @@ ggplot(mpg, aes(cty, hwy)) +
   geom_jitter()
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-23-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-23-1.png" style="display: block; margin: auto;" />
 
 1.  Set the opacity with the option `alpha`
 
@@ -405,7 +405,7 @@ ggplot(mpg, aes(cty, hwy)) +
   geom_point(alpha = 0.3)
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-24-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-24-1.png" style="display: block; margin: auto;" />
 
 > **Question 2**: One challenge with `ggplot(mpg, aes(class, hwy)) + geom_boxplot()` is that the ordering of `class` is alphabetical, which is not terribly useful. How could you change the factor levels to be more informative? Rather than reordering the factor by hand, you can do it automatically based on the data: `ggplot(mpg, aes(reorder(class, hwy), hwy)) + geom_boxplot()`. What does `reorder()` do? Read the documentation.
 
@@ -416,7 +416,7 @@ ggplot(mpg, aes(reorder(class, hwy, FUN = median), hwy)) +
   geom_boxplot()
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-25-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-25-1.png" style="display: block; margin: auto;" />
 
 > **Question 3**: Explore the distribution of the carat variable in the `diamonds` dataset. What binwidth reveals the most interesting patterns?
 
@@ -448,7 +448,7 @@ ggplot(diamonds, aes(x = carat)) +
 
     ## Warning: Removed 1889 rows containing non-finite values (stat_bin).
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-26-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-26-1.png" style="display: block; margin: auto;" />
 
 With a the number of bins set to 200 Beginning at 0.3 carat there is a spike in the number of diamonds at 0.3, 0.5, 0.7, 0,9, 1, 1.2 and 1.5. I am no diamonds expert but there is probably a reason for this pattern.
 
@@ -463,7 +463,7 @@ ggplot(diamonds, aes(x = price)) +
   facet_wrap(~cut, scales = "free")
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-27-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-27-1.png" style="display: block; margin: auto;" />
 
 Or alternatively using a frequency polygon
 
@@ -472,7 +472,7 @@ ggplot(diamonds, aes(x = price, y =..density.., color = cut)) +
   geom_freqpoly(binwidth = 200)
 ```
 
-<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-28-1.svg" style="display: block; margin: auto;" />
+<img src="Solutions_Chapter2_files/figure-markdown_github/unnamed-chunk-28-1.png" style="display: block; margin: auto;" />
 
 Fair quality diamonds are more expensive then others. Possible reason: they are bigger.
 
